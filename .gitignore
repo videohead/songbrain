@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+data/
+docs/styles/
+docs/*
+!docs/ii-v-i.mid
+docs/styles/

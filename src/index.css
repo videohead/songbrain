@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root { color-scheme: dark; }
+body { font-family: ui-sans-serif, system-ui, sans-serif; }
+.chord-cell:focus-within { outline: 2px solid #f59e0b; outline-offset: -2px; }
+
+@layer components {
+  .btn { @apply px-2.5 py-1 rounded-md bg-zinc-800 hover:bg-zinc-700 disabled:opacity-40 disabled:hover:bg-zinc-800 text-zinc-200 text-xs border border-zinc-700 transition-colors; }
+  .btn-primary { @apply bg-amber-500 hover:bg-amber-400 text-zinc-950 border-amber-400 font-semibold; }
+  .field { @apply bg-zinc-900 border border-zinc-700 rounded-md px-2 py-1 text-sm text-zinc-100 focus:outline-none focus:border-amber-400; }
+}
+
+/* Mixer channel strip */
+.fader {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  width: 28px;
+  height: 120px;
+  accent-color: #f59e0b;
+  cursor: ns-resize;
+}
+@layer components {
+  .strip-btn { @apply w-8 h-6 text-[11px] font-semibold rounded border border-zinc-700 bg-zinc-900 text-zinc-300 hover:bg-zinc-800 disabled:opacity-30 transition-colors; }
+}
