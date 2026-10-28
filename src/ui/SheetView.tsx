@@ -1,6 +1,6 @@
 /**
  * Lead sheet view: renders the song's MusicXML with OpenSheetMusicDisplay.
- * Read-only by design; the grid is the editor. Chords remain the source of truth.
+ * Read-only by design; the grid is the editor. Chords remain the vibe.
  */
 import { useEffect, useRef, useState } from 'react';
 import type { Song } from '../model/song';

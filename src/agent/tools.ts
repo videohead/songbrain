@@ -7,7 +7,7 @@ import { totalMeasures, validateSong } from '../model/song';
 import { analyzeProgression } from '../engine/harmony';
 import { insertMeasures, measuresFromSymbols, replaceMeasures, transposeSong } from '../engine/progression';
 import { normalizeStyle, validateStyle, type Style, type StyleV1, type Transition } from '../model/style';
-import { PRESET_STYLES } from '../engine/style/presets';
+import { DEFAULT_STYLE_ID, PRESET_STYLES } from '../engine/style/presets';
 import { cloneSong } from '../model/song';
 
 export interface EditorContext {
@@ -293,7 +293,7 @@ export function executeTool(store: SongStore, name: string, rawArgs: string | Re
         if (!id) {
           const ctx = store.context?.();
           const si = ctx ? sectionIndexOfMeasure(song, ctx.cursorMeasure) : 0;
-          const sid = song.arrangement?.sections?.[String(si)] ?? song.arrangement?.defaultStyle ?? 'swing';
+          const sid = song.arrangement?.sections?.[String(si)] ?? song.arrangement?.defaultStyle ?? DEFAULT_STYLE_ID;
           const st = song.styles?.[sid] ?? PRESET_STYLES[sid];
           return st ? { ok: true, result: { style: normalizeStyle(st), sectionIndex: si, source: song.styles?.[sid] ? 'song' : 'preset' } } : { ok: false, error: `Style "${sid}" not found.` };
         }
@@ -322,7 +322,7 @@ export function executeTool(store: SongStore, name: string, rawArgs: string | Re
         const styleId = args.styleId as string | undefined;
         const substyle = args.substyle as 'a' | 'b' | undefined;
         if (styleId && !song.styles?.[styleId] && !PRESET_STYLES[styleId]) return { ok: false, error: `Unknown style "${styleId}". Use ListStyles.` };
-        const arr = song.arrangement ?? { defaultStyle: 'swing' };
+        const arr = song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID };
         if (sec === 'default') {
           if (!styleId) return { ok: false, error: 'styleId required for "default".' };
           arr.defaultStyle = styleId;
@@ -342,7 +342,7 @@ export function executeTool(store: SongStore, name: string, rawArgs: string | Re
         const si = resolveSection(song, String(args.beforeSection ?? ''));
         if (si === null) return { ok: false, error: `Unknown section "${args.beforeSection}".` };
         if (si === 0) return { ok: false, error: 'There is no section before the first one to transition from.' };
-        const arr = song.arrangement ?? { defaultStyle: 'swing' };
+        const arr = song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID };
         const rest = (arr.transitions ?? []).filter((t) => t.beforeSection !== si);
         if (args.remove) { arr.transitions = rest; song.arrangement = arr; store.set(song, `Removed transition into section ${si}`); return { ok: true, result: { message: 'Transition removed.' } }; }
         const tr: Transition = { beforeSection: si, bars: Number(args.bars ?? 2), kind: (args.kind as 'rush' | 'relax') ?? 'rush', amount: Math.max(0, Math.min(1, Number(args.amount ?? 0.6))) };
@@ -362,7 +362,7 @@ export function executeTool(store: SongStore, name: string, rawArgs: string | Re
         const substyle = args.substyle as 'a' | 'b' | undefined;
         if (styleId || substyle) {
           if (styleId && !song.styles?.[styleId] && !PRESET_STYLES[styleId]) return { ok: false, error: `Unknown style "${styleId}".` };
-          const arr = song.arrangement ?? { defaultStyle: 'swing' };
+          const arr = song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID };
           if (styleId) arr.sections = { ...(arr.sections ?? {}), [String(si)]: styleId };
           if (substyle) { arr.substyles = { ...(arr.substyles ?? {}) }; if (substyle === 'a') delete arr.substyles[String(si)]; else arr.substyles[String(si)] = 'b'; }
           song.arrangement = arr;
@@ -398,7 +398,7 @@ function sectionIndexOfMeasure(song: Song, measureNumber: number): number {
 
 export const SYSTEM_PROMPT = `You are Song Brain, an expert jazz/pop harmony assistant embedded in a chord chart editor.
 
-The chord chart is a structured JSON song (title, key, tempo, meter, sections → measures → chords with beats). Chord progressions are the source of truth; notation, MIDI and playback are derived from them. You never edit notation; you edit the song model through tools.
+The chord chart is a structured JSON song (title, key, tempo, meter, sections → measures → chords with beats). Chord progressions are the vibe; notation, MIDI and playback are derived from them. You never edit notation; you edit the song model through tools.
 
 Rules:
 - Call GetSong before making changes so you work from the current state. Measure numbers in conversation are 1-based and global across sections. GetSong returns { song, editor }; editor.selection and editor.cursorMeasure tell you what "this", "here" or "these bars" refer to.

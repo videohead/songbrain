@@ -144,4 +144,4 @@ export const FUNK: Style = {
 };
 
 export const PRESET_STYLES: Record<string, Style> = Object.fromEntries([SWING, BOSSA, BALLAD, STRAIGHT8, FUNK].map((s) => [s.id, s]));
-export const DEFAULT_STYLE_ID = 'swing';
+export const DEFAULT_STYLE_ID = 'funk';

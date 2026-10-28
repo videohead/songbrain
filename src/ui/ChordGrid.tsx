@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { DEFAULT_STYLE_ID } from '../engine/style/presets';
 import type { Measure, Song } from '../model/song';
 import { beatsPerMeasure, flattenMeasures } from '../model/song';
 import type { PlaybackPosition } from '../engine/playback';
@@ -25,7 +26,16 @@ export function ChordGrid({ song, position, onChange, onPlayFrom, onSeek, onSele
   const [barsPerRow, setBarsPerRow] = useState<number>(() => { try { return Number(localStorage.getItem('songbrain.barsPerRow')) || 0; } catch { return 0; } });
   const [showAnalysis, setShowAnalysis] = useState<boolean>(() => { try { return localStorage.getItem('songbrain.analysis') === '1'; } catch { return false; } });
   const bpm = beatsPerMeasure(song);
-  const autoBars = bpm === 3 || bpm === 6 ? 4 : bpm === 2 ? 8 : bpm === 5 || bpm === 7 ? 2 : 4;
+  // Phones get two bars per row so chord names fit; the Row menu can still override.
+  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 639px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)');
+    const on = () => setNarrow(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  const wideBars = bpm === 3 || bpm === 6 ? 4 : bpm === 2 ? 8 : bpm === 5 || bpm === 7 ? 2 : 4;
+  const autoBars = narrow ? Math.min(2, wideBars) : wideBars;
   const cols = barsPerRow || autoBars;
   const analysis = useMemo(() => (showAnalysis ? analyzeProgression(song) : null), [song, showAnalysis]);
   const romanFor = (measureNumber: number, chordIndex: number) => {
@@ -106,7 +116,7 @@ export function ChordGrid({ song, position, onChange, onPlayFrom, onSeek, onSele
           </select>
         </label>
         <label className="flex items-center gap-1 text-zinc-500" title="Show Roman numerals and harmonic function under each chord">
-          <input type="checkbox" className="accent-amber-400" checked={showAnalysis} onChange={(e) => { setShowAnalysis(e.target.checked); try { localStorage.setItem('songbrain.analysis', e.target.checked ? '1' : '0'); } catch { /* ignore */ } }} /> Analysis
+          <input type="checkbox" className="accent-purple-400" checked={showAnalysis} onChange={(e) => { setShowAnalysis(e.target.checked); try { localStorage.setItem('songbrain.analysis', e.target.checked ? '1' : '0'); } catch { /* ignore */ } }} /> Analysis
         </label>
       </div>
       {analysis && analysis.patterns.length > 0 && (
@@ -121,14 +131,14 @@ export function ChordGrid({ song, position, onChange, onPlayFrom, onSeek, onSele
         counter += section.measures.length;
         return (
           <section key={si} className="rounded-lg border border-zinc-800 bg-zinc-900/40">
-            <header className="flex items-center gap-2 px-3 py-1.5 border-b border-zinc-800">
+            <header className="flex flex-wrap items-center gap-x-2 gap-y-1 px-3 py-1.5 border-b border-zinc-800">
               <input
-                className="field w-16 font-semibold text-amber-300"
+                className="field w-16 shrink-0 font-semibold text-purple-300"
                 value={section.name}
                 onChange={(e) => onChange(renameSection(song, si, e.target.value), `Renamed section`)}
               />
-              <span className="text-xs text-zinc-500">{section.measures.length} bars · mm. {start}–{start + section.measures.length - 1}</span>
-              <label className="text-xs text-zinc-500 flex items-center gap-1 ml-2" title="Playing style for this section">
+              <span className="text-xs text-zinc-500 whitespace-nowrap">{section.measures.length} bars · mm. {start}–{start + section.measures.length - 1}</span>
+              <label className="text-xs text-zinc-500 flex items-center gap-1 sm:ml-2" title="Playing style for this section">
                 Style
                 <select
                   className="field !py-0.5 text-xs"
@@ -136,10 +146,10 @@ export function ChordGrid({ song, position, onChange, onPlayFrom, onSeek, onSele
                   onChange={(e) => {
                     const sections = { ...(song.arrangement?.sections ?? {}) };
                     if (e.target.value) sections[String(si)] = e.target.value; else delete sections[String(si)];
-                    onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: 'swing' }), sections } }, `Set ${section.name} style`);
+                    onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID }), sections } }, `Set ${section.name} style`);
                   }}
                 >
-                  <option value="">Song default ({availableStyles(song).find((x) => x.id === styleIdForSection({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: 'swing' }), sections: {} } }, si))?.name})</option>
+                  <option value="">Song default ({availableStyles(song).find((x) => x.id === styleIdForSection({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID }), sections: {} } }, si))?.name})</option>
                   {availableStyles(song).map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
                 </select>
                 {(['a', 'b'] as const).map((sub) => {
@@ -148,13 +158,13 @@ export function ChordGrid({ song, position, onChange, onPlayFrom, onSeek, onSele
                   return (
                     <button
                       key={sub}
-                      className={`btn !px-2 !py-0.5 uppercase ${active ? '!bg-amber-500 !text-zinc-950 !border-amber-400' : ''}`}
+                      className={`btn !px-2 !py-0.5 uppercase ${active ? '!bg-purple-500 !text-zinc-950 !border-purple-400' : ''}`}
                       disabled={sub === 'b' && !hasB}
                       title={sub === 'a' ? 'Substyle A (verse)' : hasB ? 'Substyle B (chorus, busier)' : 'This style has no B substyle'}
                       onClick={() => {
                         const substyles = { ...(song.arrangement?.substyles ?? {}) };
                         if (sub === 'a') delete substyles[String(si)]; else substyles[String(si)] = 'b';
-                        onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: 'swing' }), substyles } }, `Set ${section.name} substyle ${sub.toUpperCase()}`);
+                        onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID }), substyles } }, `Set ${section.name} substyle ${sub.toUpperCase()}`);
                       }}
                     >{sub}</button>
                   );
@@ -217,7 +227,7 @@ interface CellProps {
   analysis?: Array<{ roman: string; function: string; diatonic: boolean } | null> | null;
 }
 
-const FUNCTION_COLOR: Record<string, string> = { tonic: 'text-emerald-300', subdominant: 'text-sky-300', dominant: 'text-amber-300', 'secondary dominant': 'text-orange-300', 'tritone sub': 'text-fuchsia-300', chromatic: 'text-rose-300', 'n.c.': 'text-zinc-500' };
+const FUNCTION_COLOR: Record<string, string> = { tonic: 'text-emerald-300', subdominant: 'text-sky-300', dominant: 'text-purple-300', 'secondary dominant': 'text-orange-300', 'tritone sub': 'text-fuchsia-300', chromatic: 'text-rose-300', 'n.c.': 'text-zinc-500' };
 
 function MeasureCell({ number, measure, bpm, active, selected, editing, onSelect, onEdit, onPlay, onCommit, onCancel, analysis }: CellProps) {
   const [text, setText] = useState(() => measureToText(measure, bpm));
@@ -228,13 +238,13 @@ function MeasureCell({ number, measure, bpm, active, selected, editing, onSelect
   return (
     <div
       className={`chord-cell relative min-h-[4.5rem] p-2 cursor-pointer select-none transition-colors
-        ${active === 'playing' ? 'bg-amber-500/25' : active === 'paused' ? 'bg-sky-500/20' : selected ? 'bg-zinc-700/60' : 'bg-zinc-950 hover:bg-zinc-900'} ${active ? 'ring-1 ring-inset ring-amber-400/60' : ''}`}
+        ${active === 'playing' ? 'bg-purple-500/25' : active === 'paused' ? 'bg-sky-500/20' : selected ? 'bg-zinc-700/60' : 'bg-zinc-950 hover:bg-zinc-900'} ${active ? 'ring-1 ring-inset ring-purple-400/60' : ''}`}
       onClick={(e) => onSelect(e.shiftKey)}
       onDoubleClick={onEdit}
     >
       <div className="flex items-center justify-between text-[10px] text-zinc-500">
         <span>{number}</span>
-        <button className="opacity-0 hover:opacity-100 group-hover:opacity-100 text-zinc-400 hover:text-amber-300" title="Play from here" onClick={(e) => { e.stopPropagation(); onPlay(); }}>▶</button>
+        <button className="opacity-0 hover:opacity-100 group-hover:opacity-100 text-zinc-400 hover:text-purple-300" title="Play from here" onClick={(e) => { e.stopPropagation(); onPlay(); }}>▶</button>
       </div>
       {editing ? (
         <input

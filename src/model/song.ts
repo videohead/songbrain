@@ -3,7 +3,7 @@ import { validateStyle } from './style';
 
 /**
  * Song Brain internal data model.
- * Chord progressions are the source of truth; everything else is derived.
+ * Chord progressions are the vibe; everything else is derived.
  * This file is pure TypeScript with no UI or library dependencies so it
  * can be shared by the browser, the server, and any agent.
  */
@@ -208,7 +208,7 @@ export function defaultSong(): Song {
   const bar = (symbol: string): Measure => ({ chords: [{ symbol, beats: 4 }] });
   const split = (a: string, b: string): Measure => ({ chords: [{ symbol: a, beats: 2 }, { symbol: b, beats: 2 }] });
   return {
-    title: 'Falling Leaves',
+    title: 'Ridiculous Phonk',
     key: 'G Minor',
     tempo: 140,
     meter: '4/4',

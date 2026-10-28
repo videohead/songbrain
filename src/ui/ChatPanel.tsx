@@ -32,7 +32,7 @@ export function ChatPanel({ adapter, readOnly, onCollapse }: Props) {
   const pill = useMemo(() => {
     if (health === null) return { text: 'connecting…', cls: 'bg-zinc-800 text-zinc-400' };
     if (!health.ok) return { text: 'server offline', cls: 'bg-rose-900/50 text-rose-300' };
-    if (!configured) return { text: 'no API key · configure', cls: 'bg-amber-900/50 text-amber-300' };
+    if (!configured) return { text: 'no API key · configure', cls: 'bg-purple-900/50 text-purple-300' };
     return { text: effectiveModel || 'model?', cls: 'bg-emerald-900/50 text-emerald-300' };
   }, [health, configured, effectiveModel]);
 
@@ -103,7 +103,7 @@ export function ChatPanel({ adapter, readOnly, onCollapse }: Props) {
           <div className="flex-1 min-h-0 overflow-auto p-3 space-y-2 text-sm">
             {lines.map((l, i) => (
               <div key={i} className={
-                l.kind === 'user' ? 'ml-6 rounded-lg bg-amber-500/15 border border-amber-500/30 px-3 py-2 whitespace-pre-wrap'
+                l.kind === 'user' ? 'ml-6 rounded-lg bg-purple-500/15 border border-purple-500/30 px-3 py-2 whitespace-pre-wrap'
                 : l.kind === 'assistant' ? 'mr-6 rounded-lg bg-zinc-800/80 px-3 py-2 whitespace-pre-wrap'
                 : l.kind === 'error' ? 'rounded-lg bg-rose-900/40 border border-rose-700/50 px-3 py-2 text-rose-200 text-xs whitespace-pre-wrap'
                 : 'font-mono text-[11px] text-zinc-500 px-1 truncate'

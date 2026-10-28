@@ -53,7 +53,7 @@ export function Knob({ value, onChange, label, bipolar, defaultValue, size = 40 
         onWheel={onWheel} onDoubleClick={() => onChange(reset)}
       >
         <path d={arc(135, 405)} stroke="#3f3f46" strokeWidth={3} fill="none" strokeLinecap="round" />
-        {value !== (bipolar ? 64 : 0) && <path d={indicator} stroke="#f59e0b" strokeWidth={3} fill="none" strokeLinecap="round" />}
+        {value !== (bipolar ? 64 : 0) && <path d={indicator} stroke="#a855f7" strokeWidth={3} fill="none" strokeLinecap="round" />}
         <circle cx={cx} cy={cy} r={r - 5} fill="#18181b" stroke="#52525b" strokeWidth={1} />
         <line x1={cx} y1={cy} x2={px * 0.78 + cx * 0.22} y2={py * 0.78 + cy * 0.22} stroke="#e4e4e7" strokeWidth={2} strokeLinecap="round" />
       </svg>

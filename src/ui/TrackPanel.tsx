@@ -4,7 +4,6 @@ import type { MidiPortInfo } from '../engine/midiOut';
 import { BASS_STYLES, VOICING_STYLES, defaultVoicingFor } from '../engine/voicing';
 import { Knob } from './Knob';
 import { GM_DRUM_KITS } from '../model/style';
-import { useRef, useState } from 'react';
 
 export interface OutputState {
   supported: boolean;
@@ -21,13 +20,9 @@ interface Props {
   onSelectOutput: (id: string) => void;
   onRefreshPorts: () => void;
   onCollapse: () => void;
-  /** Learn a style from a MIDI file played over the current chart. */
-  onLearnStyle: (file: File, name: string) => Promise<string | null>;
 }
 
-export function TrackPanel({ tracks, output, onChange, onSelectOutput, onRefreshPorts, onCollapse, onLearnStyle }: Props) {
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [learnMsg, setLearnMsg] = useState<string | null>(null);
+export function TrackPanel({ tracks, output, onChange, onSelectOutput, onRefreshPorts, onCollapse }: Props) {
   const update = (id: string, patch: Partial<Track>, label: string, coalesce = false) =>
     onChange(tracks.map((t) => (t.id === id ? { ...t, ...patch } : t)), label, coalesce);
 
@@ -59,21 +54,10 @@ export function TrackPanel({ tracks, output, onChange, onSelectOutput, onRefresh
           {output.supported ? 'Scan MIDI ports' : 'No Web MIDI'}
         </button>
         {output.error && <span className="text-rose-300">{output.error}</span>}
-        {learnMsg && <span className="text-emerald-300 truncate max-w-md" title={learnMsg}>{learnMsg}</span>}
         <div className="ml-auto flex gap-1">
           <button className="btn" onClick={() => add('chords')}>+ Comp</button>
           <button className="btn" onClick={() => add('bass')}>+ Bass</button>
           <button className="btn" onClick={() => add('drums')} disabled={tracks.some((t) => t.role === 'drums')}>+ Drums</button>
-          <button className="btn" onClick={() => fileRef.current?.click()} title="Learn a style from a MIDI performance of the current chord chart (e.g. a Band-in-a-Box render). Count-in and ending are detected automatically.">Learn style from MIDI…</button>
-          <input ref={fileRef} type="file" accept=".mid,.midi,audio/midi" className="hidden" onChange={async (e) => {
-            const f = e.target.files?.[0];
-            e.target.value = '';
-            if (!f) return;
-            const name = window.prompt('Name for the learned style', f.name.replace(/\.midi?$/i, ''));
-            if (!name) return;
-            setLearnMsg('Learning…');
-            setLearnMsg(await onLearnStyle(f, name));
-          }} />
           <button className="btn" onClick={onCollapse} title="Collapse mixer">▲ Collapse</button>
         </div>
       </div>
@@ -150,13 +134,13 @@ function Strip({ t, tracks, update, onChange }: StripProps) {
       {/* Mute / Solo */}
       <div className="flex gap-1 justify-center">
         <button className={`strip-btn ${t.mute ? 'bg-sky-500 text-zinc-950 border-sky-400' : ''}`} onClick={() => update(t.id, { mute: !t.mute }, `${t.mute ? 'Unmuted' : 'Muted'} ${t.name}`)} title="Mute">M</button>
-        <button className={`strip-btn ${t.solo ? 'bg-amber-400 text-zinc-950 border-amber-300' : ''}`} onClick={() => update(t.id, { solo: !t.solo }, `${t.solo ? 'Unsoloed' : 'Soloed'} ${t.name}`)} title="Solo">S</button>
+        <button className={`strip-btn ${t.solo ? 'bg-purple-400 text-zinc-950 border-purple-300' : ''}`} onClick={() => update(t.id, { solo: !t.solo }, `${t.solo ? 'Unsoloed' : 'Soloed'} ${t.name}`)} title="Solo">S</button>
         <button className="strip-btn text-zinc-500 hover:text-rose-300" disabled={tracks.length === 1} onClick={() => onChange(tracks.filter((x) => x.id !== t.id), `Removed track ${t.name}`)} title="Remove track">×</button>
       </div>
 
       {/* Name plate */}
       <input
-        className={`w-full text-center text-[11px] font-semibold rounded px-1 py-0.5 border focus:outline-none focus:border-amber-400 ${t.role === 'bass' ? 'bg-emerald-900/50 border-emerald-800 text-emerald-100' : t.role === 'drums' ? 'bg-rose-900/50 border-rose-800 text-rose-100' : 'bg-sky-900/50 border-sky-800 text-sky-100'}`}
+        className={`w-full text-center text-[11px] font-semibold rounded px-1 py-0.5 border focus:outline-none focus:border-purple-400 ${t.role === 'bass' ? 'bg-emerald-900/50 border-emerald-800 text-emerald-100' : t.role === 'drums' ? 'bg-rose-900/50 border-rose-800 text-rose-100' : 'bg-sky-900/50 border-sky-800 text-sky-100'}`}
         value={t.name}
         onChange={(e) => update(t.id, { name: e.target.value }, 'Renamed track', true)}
       />

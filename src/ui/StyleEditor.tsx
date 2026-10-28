@@ -8,7 +8,7 @@ import type { Song } from '../model/song';
 import { cloneSong } from '../model/song';
 import type { BassHit, CompHit, DrumHit, Pattern, RolePatterns, Style, SubstyleId } from '../model/style';
 import { GM_DRUM_NAMES } from '../model/style';
-import { PRESET_STYLES } from '../engine/style/presets';
+import { DEFAULT_STYLE_ID, PRESET_STYLES } from '../engine/style/presets';
 import { availableStyles, styleIdForSection, substyleIdForSection } from '../engine/style/resolve';
 import { VOICING_STYLES, BASS_STYLES } from '../engine/voicing';
 import { Knob } from './Knob';
@@ -61,7 +61,7 @@ export function StyleEditor({ song, cursorSection, onChange, onAudition, onStop,
     const copy: Style = { ...JSON.parse(JSON.stringify(style)), id, name: `${style.name} (edited)`, source: `copy of ${style.id}` };
     const next = cloneSong(song);
     next.styles = { ...(next.styles ?? {}), [id]: copy };
-    const arr = next.arrangement ?? { defaultStyle: 'swing' };
+    const arr = next.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID };
     arr.sections = { ...(arr.sections ?? {}), [String(cursorSection)]: id };
     next.arrangement = arr;
     onChange(next, `Duplicated style ${style.name}`);
@@ -107,7 +107,7 @@ export function StyleEditor({ song, cursorSection, onChange, onAudition, onStop,
           {styles.map((s) => <option key={s.id} value={s.id}>{s.name}{PRESET_STYLES[s.id] && !song.styles?.[s.id] ? ' (preset)' : ''}</option>)}
         </select>
         {(['a', 'b'] as const).map((k) => (
-          <button key={k} className={`btn uppercase !px-2 ${sub === k ? '!bg-amber-500 !text-zinc-950 !border-amber-400' : ''}`} onClick={() => setSub(k)} disabled={k === 'b' && !style.substyles.b && isPreset}>{k}</button>
+          <button key={k} className={`btn uppercase !px-2 ${sub === k ? '!bg-purple-500 !text-zinc-950 !border-purple-400' : ''}`} onClick={() => setSub(k)} disabled={k === 'b' && !style.substyles.b && isPreset}>{k}</button>
         ))}
         {sub === 'b' && !style.substyles.b && !isPreset && <button className="btn" onClick={() => edit('Added substyle B', (s) => { s.substyles.b = JSON.parse(JSON.stringify(s.substyles.a)); })}>Create B from A</button>}
         <input className="field w-40" value={style.name} disabled={isPreset} onChange={(e) => edit('Renamed style', (s) => { s.name = e.target.value; }, true)} />
@@ -115,7 +115,7 @@ export function StyleEditor({ song, cursorSection, onChange, onAudition, onStop,
           <select className="field" value={style.bars} disabled={isPreset} onChange={(e) => edit('Pattern length', (s) => { s.bars = Number(e.target.value); })}>{[1, 2, 4].map((b) => <option key={b}>{b}</option>)}</select>
         </label>
         {isPreset ? <button className="btn btn-primary" onClick={duplicate}>Duplicate to edit</button> : <button className="btn" onClick={saveToLibrary}>Save to library</button>}
-        <button className="btn" onClick={() => onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: 'swing' }), sections: { ...(song.arrangement?.sections ?? {}), [String(cursorSection)]: style.id } } }, `Assigned ${style.name} to section`)} title="Assign this style to the section at the cursor">Assign to section {song.sections[cursorSection]?.name}</button>
+        <button className="btn" onClick={() => onChange({ ...song, arrangement: { ...(song.arrangement ?? { defaultStyle: DEFAULT_STYLE_ID }), sections: { ...(song.arrangement?.sections ?? {}), [String(cursorSection)]: style.id } } }, `Assigned ${style.name} to section`)} title="Assign this style to the section at the cursor">Assign to section {song.sections[cursorSection]?.name}</button>
         <button className={`btn ${playing ? '!bg-rose-600 !border-rose-500 !text-white' : 'btn-primary'}`} onClick={() => (playing ? onStop() : onAudition(cursorSection))}>{playing ? '■ Stop' : '▶ Loop section'}</button>
         <div className="ml-auto flex items-center gap-2">
           {status && <span className="text-emerald-300 truncate max-w-md" title={status}>{status}</span>}
@@ -238,7 +238,7 @@ function Lane({ role, pattern, cols, beatsPerBar, swing, readOnly, onEdit }: Lan
           >
             {/* Bar lines and swung-8th markers */}
             {Array.from({ length: cols / 4 / beatsPerBar + 1 }, (_, b) => <div key={b} className="absolute top-0 bottom-0 w-px bg-zinc-500" style={{ left: b * beatsPerBar * 4 * CELL }} />)}
-            {swing > 0 && Array.from({ length: cols / 4 }, (_, b) => <div key={`s${b}`} className="absolute top-0 bottom-0 w-px bg-amber-500/40" style={{ left: (b + 0.5 + swing / 6) * 4 * CELL }} title="where swung 8ths land" />)}
+            {swing > 0 && Array.from({ length: cols / 4 }, (_, b) => <div key={`s${b}`} className="absolute top-0 bottom-0 w-px bg-purple-500/40" style={{ left: (b + 0.5 + swing / 6) * 4 * CELL }} title="where swung 8ths land" />)}
             {rowHits(row.key).map(({ h, i }) => (
               <HitBlock key={i} role={role} hit={h} readOnly={readOnly} cols={cols}
                 onMove={(beat, coalesce) => onEdit('Moved hit', (p) => { p.hits[i].beat = beat; }, coalesce)}

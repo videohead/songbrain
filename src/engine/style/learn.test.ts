@@ -9,9 +9,9 @@ import { defaultSong, defaultTracks, type Measure } from '../../model/song';
 const bar = (symbol: string): Measure => ({ chords: [{ symbol, beats: 4 }] });
 const chart = ['D', 'D', 'D', 'D', 'G', 'G', 'C', 'C'].map(bar);
 
-describe('MIDI-to-style learner (BiAB ZZJAZZ fixture)', () => {
+describe('MIDI-to-style learner (ii-V-I fixture)', () => {
   const midi = readMidi(new Uint8Array(fs.readFileSync('docs/ii-v-i.mid')));
-  const { style, report } = styleFromMidi(midi, { id: 'zzjazz', name: 'ZZJAZZ (learned)', chart, source: 'docs/ii-v-i.mid' });
+  const { style, report } = styleFromMidi(midi, { id: 'fixture', name: 'Fixture (learned)', chart, source: 'docs/ii-v-i.mid' });
 
   it('reads the file and assigns roles', () => {
     expect(midi.tempoBpm).toBe(140);
@@ -46,8 +46,8 @@ describe('MIDI-to-style learner (BiAB ZZJAZZ fixture)', () => {
   it('the learned style drives the schedule on another song', () => {
     const song = defaultSong();
     song.tracks = defaultTracks();
-    song.styles = { zzjazz: style };
-    song.arrangement = { defaultStyle: 'zzjazz' };
+    song.styles = { fixture: style };
+    song.arrangement = { defaultStyle: 'fixture' };
     const s = buildSchedule(song);
     expect(s.notes.filter((n) => n.trackId === 'drums').length).toBeGreaterThan(50);
     expect(s.notes.filter((n) => n.trackId === 'bass').length).toBeGreaterThan(20);

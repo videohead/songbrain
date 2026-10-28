@@ -11,7 +11,7 @@ function makeStore(): SongStore & { labels: string[] } {
 describe('agent tools', () => {
   it('GetSong returns the song', () => {
     const r = executeTool(makeStore(), 'GetSong', '{}');
-    expect(r.ok && (r.result as { song: Song }).song.title).toBe('Falling Leaves');
+    expect(r.ok && (r.result as { song: Song }).song.title).toBe('Ridiculous Phonk');
   });
   it('GetSong includes editor context when the store provides it', () => {
     const store = { ...makeStore(), context: () => ({ cursorMeasure: 5, selection: { from: 5, to: 8 }, playback: 'stopped' as const }) };

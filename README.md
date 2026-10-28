@@ -1,6 +1,6 @@
 # Song Brain
 
-An agentic harmonic composition environment. Chord progressions are the source of truth; playback, MIDI and MusicXML are derived from them, and an LLM agent edits the song through structured tools.
+An agentic harmonic composition environment. Chord progressions are the vibe; playback, MIDI and MusicXML are derived from them, and an LLM agent edits the song through structured tools.
 
 ## Run with Docker
 
@@ -18,13 +18,15 @@ Open **Mixer** in the transport bar. Each track has a General MIDI instrument, a
 
 ## Styles
 
-Chords say what; a **style** says how: comping rhythm and arpeggiation, bass-line pattern, drum pattern, and feel (swing, push-pull timing, accents). Pick a default style in the transport bar and override it per section in each section header. Built-in styles: Swing, Bossa Nova, Ballad, Straight 8ths, Funk. Each has an **A** (verse) and **B** (chorus) substyle, toggled per section; patterns have weighted variations, fills on the last bar of a section, optional intro and ending, per-hit pushes (anticipating the next chord) and chord-type conditions. Variation choice is deterministic from the arrangement's seed, so playback and export match. Styles are JSON documents separate from the song; custom ones are saved to `/data/styles/` and can be embedded in the song for portability. Drums follow the style and export to MIDI (channel 10) and JSON.
+Chords say what; a **style** says how: comping rhythm and arpeggiation, bass-line pattern, drum pattern, and feel (swing, push-pull timing, accents). Pick a default style in the transport bar and override it per section in each section header. Built-in styles: Swing, Bossa Nova, Ballad, Straight 8ths, Funk. Each has an **A** (verse) and **B** (chorus) substyle, toggled per section; patterns have weighted variations, fills on the last bar of a section, optional intro and ending, per-hit pushes (anticipating the next chord) and chord-type conditions. Variation choice is deterministic from the arrangement's seed, so playback and export match. Styles are JSON documents separate from the song; custom and learned ones are saved as one JSON file per style in the repo's `styles/` directory (tracked in git, so `git add styles/` to keep them; bind-mounted in both Docker profiles, override with `STYLES_DIR`) and can be embedded in the song for portability. Drums follow the style and export to MIDI (channel 10) and JSON.
 
-**Learn a style from MIDI.** Render any chord chart in Band-in-a-Box (or play one in your DAW), export a type 1 MIDI file, open the same chart in Song Brain, then Mixer → "Learn style from MIDI…". Count-in and ending bars are detected, tracks are assigned to comp/bass/drums, swing and push-pull are measured, and each bar becomes a weighted pattern variation. The style is saved to the library and set as the song's default.
+**Learn a style from MIDI.** Submit a chord chart played by any MIDI application, such as a DAW, an intelligent automatic accompaniment program or a MIDI accompaniment generator program: enter the chart there, export a type 1 MIDI file, open the same chart in Song Brain, then press **Train style** in the top bar (drop the file, name it; add a B substyle with a second file). **Help (?)** has a step-by-step guide and a built-in 32-bar **training chart** designed for this (Load training chart). Count-in and ending bars are detected, tracks are assigned to comp/bass/drums, swing and push-pull are measured, and each bar becomes a weighted pattern variation. The style is saved to the library and set as the song's default.
 
 ## Style editor and agent style tools
 
 **Style editor** (transport bar): lanes for comp, bass and drums with draggable hits, variation and fill tabs, A/B substyles, feel knobs (swing, push-pull, humanize, accents, per-role push-pull), loop audition of the current section, Duplicate-to-edit for presets, Save to library. The agent edits the same documents through `ListStyles`, `GetStyle`, `UpdateStyle`, `SaveStyle`, `SetSectionStyle`, `SetTransition` and `AuditionStyle`, so "make the comping sparser and lay it back" or "rush into the chorus" are tool calls.
+
+**Roland PMA-5.** **Open…** accepts a PMA-5 bulk backup (`.syx`). Song Brain lists the songs and user styles in it; a song loads as a chord chart (chords, meter, tempo), and user styles are converted with the same learner as **Train style**. Written from the format notes in [pma5tool](https://github.com/richb93/pma5tool)'s `PROTOCOL.md` (no code copied); see `src/engine/import/pma5.ts`. Not yet verified against real hardware dumps; `.blk` files are not read.
 
 ## Lead sheet, analysis and import
 

@@ -13,6 +13,10 @@ import { songTracks, flattenMeasures } from '../model/song';
 import { createServerLoopAdapter } from '../agent/adapter';
 import { loadLlmSettings } from '../agent/llmSettings';
 import { RoleBanner, RolePill } from './RoleBanner';
+import { HelpPanel } from './HelpPanel';
+import { Pma5ImportPanel } from './Pma5ImportPanel';
+import { TrainStylePanel } from './TrainStylePanel';
+import { trainingChartSong } from '../help/trainingChart';
 
 export default function App() {
   const history = useSongHistory();
@@ -24,7 +28,10 @@ export default function App() {
   const [mixerOpen, setMixerOpen] = useState(false);
   const [styleOpen, setStyleOpen] = useState(false);
   const [view, setView] = useState<'grid' | 'sheet'>('grid');
-  const [chatOpen, setChatOpen] = useState(true);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [trainOpen, setTrainOpen] = useState(false);
+  const [pma5, setPma5] = useState<{ bytes: Uint8Array; name: string } | null>(null);
   const midi = useMidiOutput(playback);
   const relay = useRelay(history.store, song, (s, label) => history.applyRemote(s, label));
   const readOnly = relay.role === 'readonly';
@@ -72,17 +79,31 @@ export default function App() {
 
   return (
     <div className="h-full flex flex-col">
-      <header className="flex items-center gap-3 px-4 py-2 border-b border-zinc-800 bg-zinc-900/60">
+      <header className="flex flex-wrap items-center gap-x-3 gap-y-1 px-3 sm:px-4 py-2 border-b border-zinc-800 bg-zinc-900/60">
         <div className="flex items-center gap-2">
-          <span className="text-amber-400 text-xl">◉</span>
-          <h1 className="font-semibold tracking-tight">Song Brain</h1>
+          <span className="text-purple-400 text-xl">◉</span>
+          <h1 className="font-semibold tracking-tight whitespace-nowrap">Song Brain</h1>
         </div>
-        <span className="text-xs text-zinc-500 hidden md:inline">Chord progressions are the source of truth. Everything else is derived.</span>
-        <div className="ml-auto flex items-center gap-2 text-xs text-zinc-400">
+        <span className="text-xs text-zinc-500 hidden md:inline">Chord progressions are the vibe. Everything else is derived.</span>
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5 sm:gap-2 text-xs text-zinc-400">
           <RolePill role={relay.role} tabs={relay.tabs} />
-          <button className="btn" onClick={history.undo} disabled={!history.canUndo} title="Undo (Ctrl+Z)">↶ Undo</button>
-          <button className="btn" onClick={history.redo} disabled={!history.canRedo} title="Redo (Ctrl+Shift+Z)">↷ Redo</button>
-          <span className="truncate max-w-[16rem] text-zinc-500" title={history.label}>{history.label}</span>
+          <button className="btn" onClick={() => setTrainOpen(true)} disabled={readOnly} title="Train a style from a MIDI file">Train<span className="hidden sm:inline"> style</span></button>
+          <button className="btn" onClick={() => setHelpOpen(true)} aria-label="Help" title="Help">?</button>
+          <button
+            className={`btn ${chatOpen ? '' : 'text-purple-300'}`}
+            onClick={() => setChatOpen((o) => !o)}
+            aria-pressed={chatOpen}
+            aria-label={chatOpen ? 'Hide agent panel' : 'Show agent panel'}
+            title={chatOpen ? 'Hide agent panel' : 'Show agent panel'}
+          >
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="12" cy="5" r="2.5" /><circle cx="5" cy="18" r="2.5" /><circle cx="19" cy="18" r="2.5" />
+              <path d="M12 7.5v4M12 11.5l-5.5 4.3M12 11.5l5.5 4.3" />
+            </svg>
+          </button>
+          <button className="btn" onClick={history.undo} disabled={!history.canUndo} title="Undo (Ctrl+Z)" aria-label="Undo">↶<span className="hidden sm:inline"> Undo</span></button>
+          <button className="btn" onClick={history.redo} disabled={!history.canRedo} title="Redo (Ctrl+Shift+Z)" aria-label="Redo">↷<span className="hidden sm:inline"> Redo</span></button>
+          <span className="hidden sm:inline truncate max-w-[16rem] text-zinc-500" title={history.label}>{history.label}</span>
         </div>
       </header>
 
@@ -97,6 +118,7 @@ export default function App() {
             onToggleLoop={() => { setLoop(!loop); playback.setLoop(!loop); }}
             onChange={(patch, label) => commit({ ...song, ...patch }, label)}
             onLoad={(s) => { playback.stop(); commit(s, `Loaded ${s.title}`); }}
+            onImportPma5={(bytes, name) => setPma5({ bytes, name })}
             mixerOpen={mixerOpen}
             onToggleMixer={() => setMixerOpen((o) => !o)}
             styleOpen={styleOpen}
@@ -122,19 +144,6 @@ export default function App() {
               onSelectOutput={(id) => void midi.selectOutput(id)}
               onRefreshPorts={() => void midi.refreshPorts()}
               onCollapse={() => setMixerOpen(false)}
-              onLearnStyle={async (file, name) => {
-                try {
-                  const buf = new Uint8Array(await file.arrayBuffer());
-                  let bin = ''; for (const b of buf) bin += String.fromCharCode(b);
-                  const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || `learned-${Date.now().toString(36)}`;
-                  const res = await fetch('/api/styles/learn', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ midiBase64: btoa(bin), chart: flattenMeasures(song).map((m) => m.measure), id, name, save: true, source: file.name }) });
-                  const data = await res.json();
-                  if (!data.ok) return `Learn failed: ${data.error}${data.errors ? ' · ' + data.errors.slice(0, 3).join('; ') : ''}`;
-                  const r = data.report;
-                  commit({ ...song, styles: { ...(song.styles ?? {}), [id]: data.style }, arrangement: { ...(song.arrangement ?? {}), defaultStyle: id } }, `Learned style ${name}`);
-                  return `Learned "${name}": chart from bar ${r.startBar + 1}, ${r.chartBars} bars, ${r.endingBars}-bar ending, swing ${r.swing}, roles ${r.roles.filter((x: { role: string }) => x.role !== 'ignored').map((x: { track: string; role: string }) => `${x.track}→${x.role}`).join(', ')}. Set as default style.`;
-                } catch (e) { return `Learn failed: ${(e as Error).message}`; }
-              }}
             />
           )}
           <div className="flex items-center gap-2 px-4 pt-3 text-xs">
@@ -151,14 +160,40 @@ export default function App() {
               : <SheetView song={song} currentMeasure={position.measure} />}
           </div>
         </main>
-        {chatOpen ? (
-          <aside className="w-[24rem] max-w-[90vw] shrink-0 border-l border-zinc-800 bg-zinc-900/40 flex flex-col">
-            <ChatPanel adapter={chatAdapter} readOnly={readOnly} onCollapse={() => setChatOpen(false)} />
-          </aside>
-        ) : (
-          <button className="shrink-0 w-8 border-l border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:text-amber-300 text-xs [writing-mode:vertical-rl] rotate-180 py-3" onClick={() => setChatOpen(true)} title="Open agent panel">Agent ▸</button>
-        )}
+        {/* Always mounted so the conversation survives hiding; overlays the chart on mobile. */}
+        <aside className={`${chatOpen ? 'flex' : 'hidden'} max-md:fixed max-md:inset-y-0 max-md:right-0 max-md:z-40 max-md:shadow-2xl w-[24rem] max-w-[90vw] shrink-0 border-l border-zinc-800 bg-zinc-900 md:bg-zinc-900/40 flex-col`}>
+          <ChatPanel adapter={chatAdapter} readOnly={readOnly} onCollapse={() => setChatOpen(false)} />
+        </aside>
       </div>
+      {helpOpen && (
+        <HelpPanel
+          onClose={() => setHelpOpen(false)}
+          onTrain={() => setTrainOpen(true)}
+          onLoadSong={(s) => { playback.stop(); commit(s, `Loaded ${s.title}`); }}
+          onLoadTrainingChart={() => { playback.stop(); commit(trainingChartSong(), 'Loaded training chart'); }}
+        />
+      )}
+      {pma5 && (
+        <Pma5ImportPanel
+          bytes={pma5.bytes}
+          fileName={pma5.name}
+          onClose={() => setPma5(null)}
+          onLoadSong={(s, label) => { playback.stop(); commit(s, label); }}
+          onImportStyles={(styles, label) => commit({
+            ...song,
+            styles: { ...(song.styles ?? {}), ...Object.fromEntries(styles.map((st) => [st.id, st])) },
+            arrangement: { ...(song.arrangement ?? {}), defaultStyle: styles[0].id },
+          }, label)}
+        />
+      )}
+      {trainOpen && (
+        <TrainStylePanel
+          song={song}
+          onClose={() => setTrainOpen(false)}
+          onOpenHelp={() => setHelpOpen(true)}
+          onTrained={(style, label) => commit({ ...song, styles: { ...(song.styles ?? {}), [style.id]: style }, arrangement: { ...(song.arrangement ?? {}), defaultStyle: style.id } }, label)}
+        />
+      )}
     </div>
   );
 }

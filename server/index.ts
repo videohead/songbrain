@@ -32,7 +32,7 @@ const envHasKey = Boolean(ENV_LLM.apiKey && !ENV_LLM.apiKey.startsWith('sk-...')
 const app = express();
 const server = http.createServer(app);
 const relay = createRelay(server, DATA_DIR);
-const styles = createStyleLibrary(DATA_DIR);
+const styles = createStyleLibrary(process.env.STYLES_DIR ?? path.join(root, 'styles'), path.join(DATA_DIR, 'styles'));
 const tools = createToolExecutor(relay, styles);
 app.use(express.json({ limit: '16mb' }));
 mountMcp(app, tools, relay, styles);
@@ -56,13 +56,16 @@ app.post('/api/styles', (req, res) => {
 });
 /** Learn a style from a MIDI performance of a known chart. Body: { midiBase64, chart: Measure[], id, name, patternBars?, startBar?, save? } */
 app.post('/api/styles/learn', (req, res) => {
-  const { midiBase64, chart, id, name, patternBars, startBar, save, source } = req.body ?? {};
+  const { midiBase64, chart, id, name, patternBars, startBar, save, source, substyle } = req.body ?? {};
   if (typeof midiBase64 !== 'string' || !Array.isArray(chart) || typeof id !== 'string' || typeof name !== 'string') {
     res.status(400).json({ ok: false, error: 'midiBase64, chart[], id and name are required' }); return;
   }
   try {
     const midi = readMidi(new Uint8Array(Buffer.from(midiBase64, 'base64')));
-    const { style, report } = styleFromMidi(midi, { id, name, chart, patternBars, startBar, source: source ?? 'MIDI upload' });
+    // Substyle B is merged into the style already in the library under this id (learn A first).
+    const into = substyle === 'b' ? styles.get(id) ?? undefined : undefined;
+    if (substyle === 'b' && !into) { res.status(422).json({ ok: false, error: `Substyle B needs an existing style "${id}". Learn substyle A first.` }); return; }
+    const { style, report } = styleFromMidi(midi, { id, name, chart, patternBars, startBar, source: source ?? 'MIDI upload', into, substyle: substyle === 'b' ? 'b' : 'a' });
     const errors = validateStyle(style);
     if (errors.length) { res.status(422).json({ ok: false, error: 'Learned style failed validation', errors, report }); return; }
     if (save) styles.save(style);

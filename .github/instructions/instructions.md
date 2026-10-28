@@ -6,7 +6,7 @@ Song Brain is an agentic harmonic composition environment.
 
 The core design principle is:
 
-Chord Progressions are the source of truth.
+Chord Progressions are the vibe.
 Everything else is derived.
 
 Derived artifacts include:
@@ -20,7 +20,7 @@ Derived artifacts include:
 
 ## Product Philosophy
 
-Band-in-a-Box:
+Traditional accompaniment software:
 Chord -> Style -> Audio
 
 Song Brain:

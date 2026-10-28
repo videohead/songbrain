@@ -32,6 +32,7 @@ services:
       - DATA_DIR=/data
     volumes:
       - songdata:/data
+      - ./styles:/app/styles # saved styles land in the repo
     profiles: ["prod"]
 
 volumes:

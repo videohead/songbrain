@@ -25,6 +25,7 @@ RUN npm ci --omit=dev && npm install --no-save tsx
 COPY --from=build /app/dist ./dist
 COPY server ./server
 COPY src ./src
+COPY styles ./styles
 VOLUME /data
 EXPOSE 5173
 CMD ["npx", "tsx", "server/index.ts"]

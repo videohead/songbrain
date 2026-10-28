@@ -1,6 +1,6 @@
 /**
  * MusicXML import: harmony elements, key, time, tempo and rehearsal marks → Song.
- * One-way conversion on entry; chords remain the source of truth afterwards.
+ * One-way conversion on entry; chords remain the vibe afterwards.
  * Works with the browser DOMParser or @xmldom/xmldom (pass a parsed Document).
  */
 import type { Measure, Song, Section } from '../../model/song';

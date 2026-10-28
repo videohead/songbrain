@@ -1,0 +1,1562 @@
+{
+  "id": "crease",
+  "name": "Acoustic Rock",
+  "description": "Acoustic Rock",
+  "bars": 1,
+  "beatsPerBar": 4,
+  "feel": {
+    "swing": 0,
+    "pushPull": -1,
+    "humanize": 10,
+    "accents": [
+      0.97,
+      1,
+      0.84,
+      0.88
+    ],
+    "rolePushPull": {
+      "chords": 2,
+      "bass": 1,
+      "drums": -3
+    }
+  },
+  "substyles": {
+    "a": {
+      "bass": {
+        "style": "roots-fifths",
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1,
+                "velocity": 83,
+                "degree": "fifth"
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 87,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 80,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 74,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 67,
+                "degree": "approach"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1.5,
+                "velocity": 75,
+                "degree": "fifth"
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 64,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 56,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 70,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 73,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 1.5,
+                "duration": 1,
+                "velocity": 61,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2.5,
+                "duration": 1,
+                "velocity": 69,
+                "degree": "third"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 57,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 44,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 77,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 65,
+                "degree": "root"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 51,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 1,
+                "duration": 1,
+                "velocity": 67,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 75,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 70,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 51,
+                "degree": "fifth"
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 64,
+                "degree": "third"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1,
+                "velocity": 64,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 36,
+                "degree": "root"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 68,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 51,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      },
+      "drums": {
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 68,
+                "drum": 36
+              },
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 43
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 38,
+                "drum": 44
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 44,
+                "drum": 43
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 43,
+                "drum": 36
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 50,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              }
+            ],
+            "bars": 1,
+            "weight": 7
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 44
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 32,
+                "drum": 43
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 50,
+                "drum": 36
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 36
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              }
+            ],
+            "bars": 1,
+            "weight": 6
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 56,
+                "drum": 36
+              },
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 33,
+                "drum": 43
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 37,
+                "drum": 44
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 38,
+                "drum": 43
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 44,
+                "drum": 36
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 40,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 23,
+                "drum": 38
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 44
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 32,
+                "drum": 43
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 50,
+                "drum": 36
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 43
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 36
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      },
+      "comp": {
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 55,
+                "voice": "full"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 65,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 2,
+                "velocity": 92,
+                "voice": "full"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 54,
+                "voice": "bottom",
+                "push": 1
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 64,
+                "voice": "full",
+                "push": 0.5
+              }
+            ],
+            "bars": 1,
+            "weight": 2
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 75,
+                "voice": "top"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 68,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 68,
+                "voice": "full"
+              },
+              {
+                "beat": 3,
+                "duration": 1,
+                "velocity": 49,
+                "voice": "full"
+              },
+              {
+                "beat": 3.25,
+                "duration": 1.75,
+                "velocity": 49,
+                "voice": "top"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 65,
+                "voice": "top"
+              }
+            ],
+            "bars": 1,
+            "weight": 2
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 75,
+                "voice": "top"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 68,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 68,
+                "voice": "full"
+              },
+              {
+                "beat": 3,
+                "duration": 1,
+                "velocity": 49,
+                "voice": "full",
+                "push": 1
+              },
+              {
+                "beat": 3.25,
+                "duration": 0.5,
+                "velocity": 49,
+                "voice": "top",
+                "push": 0.75
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 65,
+                "voice": "top"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 47,
+                "voice": "full"
+              },
+              {
+                "beat": 0.25,
+                "duration": 0.25,
+                "velocity": 53,
+                "voice": "top"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 48,
+                "voice": "full"
+              },
+              {
+                "beat": 1,
+                "duration": 0.25,
+                "velocity": 68,
+                "voice": "top"
+              },
+              {
+                "beat": 1.25,
+                "duration": 1,
+                "velocity": 55,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 2,
+                "velocity": 52,
+                "voice": "full"
+              },
+              {
+                "beat": 2.25,
+                "duration": 0.5,
+                "velocity": 41,
+                "voice": "top"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 55,
+                "voice": "top",
+                "push": 1.5
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 73,
+                "voice": "full",
+                "push": 1
+              },
+              {
+                "beat": 3.25,
+                "duration": 0.5,
+                "velocity": 40,
+                "voice": "top"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 53,
+                "voice": "full",
+                "push": 0.5
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1,
+                "velocity": 75,
+                "voice": "full"
+              },
+              {
+                "beat": 0.25,
+                "duration": 0.25,
+                "velocity": 51,
+                "voice": "bottom"
+              },
+              {
+                "beat": 0.5,
+                "duration": 1,
+                "velocity": 67,
+                "voice": "full"
+              },
+              {
+                "beat": 1.25,
+                "duration": 0.5,
+                "velocity": 70,
+                "voice": "top"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 85,
+                "voice": "full"
+              },
+              {
+                "beat": 2,
+                "duration": 1.5,
+                "velocity": 70,
+                "voice": "bottom"
+              },
+              {
+                "beat": 3,
+                "duration": 1,
+                "velocity": 54,
+                "voice": "bottom",
+                "push": 1
+              },
+              {
+                "beat": 3.25,
+                "duration": 0.75,
+                "velocity": 63,
+                "voice": "top",
+                "push": 0.75
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 74,
+                "voice": "full"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      }
+    },
+    "b": {
+      "bass": {
+        "style": "roots-fifths",
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 68,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 57,
+                "degree": "third"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 83,
+                "degree": "third"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 76,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 51,
+                "degree": "approach"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1.25,
+                "velocity": 81,
+                "degree": "fifth"
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 73,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 48,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2.5,
+                "duration": 1,
+                "velocity": 49,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 43,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 1.5,
+                "duration": 1,
+                "velocity": 61,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 57,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 68,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 70,
+                "degree": "approach"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1.5,
+                "velocity": 64,
+                "degree": "root"
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 61,
+                "degree": "root"
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 51,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 45,
+                "degree": "root"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 34,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 35,
+                "degree": "fifth"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1,
+                "velocity": 44,
+                "degree": "root"
+              },
+              {
+                "beat": 1,
+                "duration": 1,
+                "velocity": 68,
+                "degree": "fifth"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 83,
+                "degree": "fifth"
+              },
+              {
+                "beat": 3,
+                "duration": 1,
+                "velocity": 68,
+                "degree": "root"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      },
+      "drums": {
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 60,
+                "drum": 37
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 51
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 33,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 30,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.25,
+                "velocity": 90,
+                "drum": 38
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 33,
+                "drum": 51
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 42,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 24,
+                "drum": 51
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 33,
+                "drum": 36
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 50,
+                "drum": 36
+              },
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 25,
+                "drum": 51
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 51
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 24,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.25,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 33,
+                "drum": 51
+              },
+              {
+                "beat": 2.25,
+                "duration": 0.5,
+                "velocity": 22,
+                "drum": 38
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 42,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 20,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 26,
+                "drum": 51
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 36
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 22,
+                "drum": 51
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 36,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 24,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.25,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 35,
+                "drum": 51
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 52,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 23,
+                "drum": 51
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 39,
+                "drum": 36
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 21,
+                "drum": 51
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 22,
+                "drum": 38
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 27,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.5,
+                "velocity": 90,
+                "drum": 51
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.25,
+                "velocity": 21,
+                "drum": 38
+              },
+              {
+                "beat": 2,
+                "duration": 0.5,
+                "velocity": 34,
+                "drum": 51
+              },
+              {
+                "beat": 2.25,
+                "duration": 0.5,
+                "velocity": 22,
+                "drum": 38
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 35,
+                "drum": 36
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 37,
+                "drum": 38
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 25,
+                "drum": 51
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 30,
+                "drum": 36
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      },
+      "comp": {
+        "variations": [
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 54,
+                "voice": "top"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.5,
+                "velocity": 62,
+                "voice": "full"
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 59,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 70,
+                "voice": "full"
+              },
+              {
+                "beat": 2.5,
+                "duration": 1,
+                "velocity": 63,
+                "voice": "top"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 54,
+                "voice": "top"
+              },
+              {
+                "beat": 3.25,
+                "duration": 0.5,
+                "velocity": 82,
+                "voice": "top"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 74,
+                "voice": "full"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 80,
+                "voice": "full"
+              },
+              {
+                "beat": 0.5,
+                "duration": 0.75,
+                "velocity": 86,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 0.75,
+                "velocity": 94,
+                "voice": "full"
+              },
+              {
+                "beat": 2,
+                "duration": 1,
+                "velocity": 78,
+                "voice": "bottom"
+              },
+              {
+                "beat": 2.25,
+                "duration": 0.25,
+                "velocity": 84,
+                "voice": "top"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 71,
+                "voice": "top",
+                "push": 1.5
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 67,
+                "voice": "full",
+                "push": 1
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 62,
+                "voice": "full",
+                "push": 0.5
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1,
+                "velocity": 56,
+                "voice": "top"
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 59,
+                "voice": "top"
+              },
+              {
+                "beat": 1.25,
+                "duration": 1,
+                "velocity": 69,
+                "voice": "top"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1,
+                "velocity": 69,
+                "voice": "full"
+              },
+              {
+                "beat": 2.5,
+                "duration": 1,
+                "velocity": 66,
+                "voice": "top"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 65,
+                "voice": "top"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 0.5,
+                "velocity": 68,
+                "voice": "top"
+              },
+              {
+                "beat": 0.5,
+                "duration": 1,
+                "velocity": 76,
+                "voice": "full"
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 67,
+                "voice": "full"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 67,
+                "voice": "full"
+              },
+              {
+                "beat": 2.5,
+                "duration": 1,
+                "velocity": 67,
+                "voice": "full"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 74,
+                "voice": "top"
+              },
+              {
+                "beat": 3.25,
+                "duration": 0.25,
+                "velocity": 70,
+                "voice": "top"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 73,
+                "voice": "top"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          },
+          {
+            "hits": [
+              {
+                "beat": 0,
+                "duration": 1,
+                "velocity": 97,
+                "voice": "top"
+              },
+              {
+                "beat": 1,
+                "duration": 0.5,
+                "velocity": 60,
+                "voice": "bottom"
+              },
+              {
+                "beat": 1.25,
+                "duration": 0.25,
+                "velocity": 85,
+                "voice": "top"
+              },
+              {
+                "beat": 1.5,
+                "duration": 1.5,
+                "velocity": 83,
+                "voice": "full"
+              },
+              {
+                "beat": 2.5,
+                "duration": 0.5,
+                "velocity": 75,
+                "voice": "full"
+              },
+              {
+                "beat": 3,
+                "duration": 0.5,
+                "velocity": 67,
+                "voice": "full"
+              },
+              {
+                "beat": 3.5,
+                "duration": 0.5,
+                "velocity": 75,
+                "voice": "full"
+              }
+            ],
+            "bars": 1,
+            "weight": 1
+          }
+        ]
+      }
+    }
+  },
+  "source": "docs/crease-a.mid"
+}
