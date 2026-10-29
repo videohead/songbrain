@@ -14,7 +14,7 @@ describe('style tools', () => {
   it('ListStyles and GetStyle (cursor section, by id, unknown)', () => {
     const store = makeStore();
     const list = executeTool(store, 'ListStyles', '{}');
-    expect(list.ok && (list.result as unknown[]).length).toBe(5);
+    expect(list.ok && (list.result as unknown[]).length).toBe(6);
     const cur = executeTool(store, 'GetStyle', '{}');
     expect(cur.ok && (cur.result as { sectionIndex: number }).sectionIndex).toBe(1); // measure 10 is in section B
     expect(executeTool(store, 'GetStyle', '{"id":"bossa"}').ok).toBe(true);

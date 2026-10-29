@@ -203,27 +203,30 @@ export function emptyMeasure(beats: number): Measure {
   return { chords: [{ symbol: 'N.C.', beats }] };
 }
 
-/** Default demo song: a public-domain-style ii-V-I workout in G minor / Bb major. */
+/**
+ * Default demo song: a funk workout in E Dorian / minor with the chord vocabulary of Minneapolis funk and
+ * Prince-style harmony: minor 9ths and 11ths, dominant 9ths and 13ths, and the 7#9 ("purple") chord.
+ */
 export function defaultSong(): Song {
   const bar = (symbol: string): Measure => ({ chords: [{ symbol, beats: 4 }] });
   const split = (a: string, b: string): Measure => ({ chords: [{ symbol: a, beats: 2 }, { symbol: b, beats: 2 }] });
   return {
     title: 'Ridiculous Phonk',
-    key: 'G Minor',
-    tempo: 140,
+    key: 'E Minor',
+    tempo: 105,
     meter: '4/4',
     sections: [
       {
         name: 'A',
-        measures: [bar('Cm7'), bar('F7'), bar('BbMaj7'), bar('EbMaj7'), bar('Am7b5'), bar('D7'), bar('Gm6'), bar('Gm6')],
+        measures: [bar('Em9'), bar('Em9'), bar('A13'), bar('A13'), bar('Em9'), bar('Em9'), bar('A13'), bar('B7#9')],
       },
       {
         name: 'B',
-        measures: [bar('Am7b5'), bar('D7b9'), bar('Gm6'), bar('Gm6'), bar('Cm7'), bar('F7'), bar('BbMaj7'), bar('EbMaj7')],
+        measures: [bar('Am9'), bar('D13'), bar('Gmaj9'), bar('Gmaj9'), bar('C9'), bar('B7#9'), bar('Em9'), bar('Em9')],
       },
       {
         name: 'C',
-        measures: [bar('Am7b5'), bar('D7b9'), split('Gm7', 'C7'), split('Fm7', 'Bb7'), bar('EbMaj7'), split('Am7b5', 'D7b9'), bar('Gm6'), bar('Gm6')],
+        measures: [bar('F#m11'), bar('B7b9'), bar('Em9'), bar('C9'), bar('F#m11'), bar('B7b9'), split('Em9', 'B7#9'), bar('E7#9')],
       },
     ],
   };

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Note } from 'tonal';
-import { defaultSong, defaultTracks, validateSong } from '../../model/song';
+import { defaultTracks, validateSong } from '../../model/song';
+import { jazzFixtureSong } from '../../model/fixtures';
 import { validateStyle } from '../../model/style';
 import { PRESET_STYLES } from './presets';
 import { applyFeel } from './apply';
@@ -31,7 +32,7 @@ describe('feel', () => {
 
 describe('style-driven schedule', () => {
   it('produces drum notes on the drums track and respects per-section styles', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks();
     song.arrangement = { defaultStyle: 'swing', sections: { '1': 'bossa' } };
     const s = buildSchedule(song);
@@ -46,7 +47,7 @@ describe('style-driven schedule', () => {
     expect(inB).not.toContain(51);
   });
   it('comping follows the style rhythm, and chord changes without a hit still sound', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.arrangement = { defaultStyle: 'ballad' };
     const s = buildSchedule(song);
     const piano = s.notes.filter((n) => n.trackId === 'piano');
@@ -60,7 +61,7 @@ describe('style-driven schedule', () => {
     expect(inM19.some((n) => n.tick >= m19 + 2 * PPQ - 10)).toBe(true);
   });
   it('bossa bass pattern uses roots and fifths from the pattern degrees', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.arrangement = { defaultStyle: 'bossa' };
     const s = buildSchedule(song);
     const bass = s.notes.filter((n) => n.trackId === 'bass' && n.tick < 4 * PPQ - 20).map((n) => Note.chroma(n.notes[0])); // -20: humanize may pull bar 2's downbeat a few ticks early
@@ -70,7 +71,7 @@ describe('style-driven schedule', () => {
 
 describe('drums export', () => {
   it('MIDI has a channel-10 track; MusicXML omits drums', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks();
     const hex = Array.from(songToMidi(song)).map((b) => b.toString(16).padStart(2, '0')).join(' ');
     expect(hex).toContain('c9 00'); // program change on channel 10
@@ -80,7 +81,7 @@ describe('drums export', () => {
     expect(validateSong(song).ok).toBe(true);
   });
   it('rejects bad arrangement and style docs', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.arrangement = { defaultStyle: 'swing', transitions: [{ beforeSection: 1, bars: 2, kind: 'rush', amount: 2 }] };
     expect(validateSong(song).ok).toBe(false);
   });

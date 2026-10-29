@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { analyzeProgression, parseChord, transposeChordSymbol, transposeKey, voiceChord } from './harmony';
-import { defaultSong, defaultTracks, validateSong } from '../model/song';
+import { defaultTracks, validateSong } from '../model/song';
+import { jazzFixtureSong } from '../model/fixtures';
 import { insertMeasures, measuresFromSymbols, transposeSong } from './progression';
 import { songToMidi } from './export/midi';
 import { songToMusicXml } from './export/musicxml';
@@ -28,7 +29,7 @@ describe('harmony', () => {
     expect(v.piano.length).toBeGreaterThanOrEqual(3);
   });
   it('detects ii-V-I', () => {
-    const a = analyzeProgression(defaultSong());
+    const a = analyzeProgression(jazzFixtureSong());
     expect(a.patterns.some((p) => p.startsWith('ii–V–I in Bb'))).toBe(true);
     expect(a.chords[0].roman).toBe('iv7');
   });
@@ -36,13 +37,13 @@ describe('harmony', () => {
 
 describe('progression', () => {
   it('transposes a song to a target key', () => {
-    const s = transposeSong(defaultSong(), { toKey: 'Bb' });
+    const s = transposeSong(jazzFixtureSong(), { toKey: 'Bb' });
     expect(s.key).toBe('Bb Minor');
     expect(s.sections[0].measures[0].chords[0].symbol).toBe('Ebm7');
     expect(validateSong(s).ok).toBe(true);
   });
   it('inserts a ii-V before measure 8', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     const out = insertMeasures(song, 8, measuresFromSymbols(song, ['Am7b5', 'D7'], 2));
     expect(out.sections[0].measures.length).toBe(9);
     expect(out.sections[0].measures[7].chords.map((c) => c.symbol)).toEqual(['Am7b5', 'D7']);
@@ -52,7 +53,7 @@ describe('progression', () => {
 
 describe('export', () => {
   it('writes a MIDI header with one chunk per track plus meta', () => {
-    const bytes = songToMidi(defaultSong());
+    const bytes = songToMidi(jazzFixtureSong());
     expect(String.fromCharCode(...bytes.slice(0, 4))).toBe('MThd');
     expect((bytes[10] << 8) | bytes[11]).toBe(4); // meta + piano + bass + drums
     // Second chunk (piano) starts with a program change on channel 1 (0xC0 0x00) after the track-name meta.
@@ -62,20 +63,20 @@ describe('export', () => {
     expect(hex).toContain('b1 07 6e');       // bass level CC7 = 110
   });
   it('honors mute and solo in MIDI export', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks().map((t) => (t.id === 'bass' ? { ...t, solo: true } : t));
     const bytes = songToMidi(song);
     expect((bytes[10] << 8) | bytes[11]).toBe(2); // meta + bass only
   });
   it('validates tracks', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks();
     expect(validateSong(song).ok).toBe(true);
     song.tracks[0].channel = 17;
     expect(validateSong(song).ok).toBe(false);
   });
   it('writes MusicXML with harmony', () => {
-    const xml = songToMusicXml(defaultSong());
+    const xml = songToMusicXml(jazzFixtureSong());
     expect(xml).toContain('<harmony><root><root-step>C</root-step></root><kind>minor-seventh</kind></harmony>');
     expect(xml).toContain('<fifths>-2</fifths>');
     expect(xml).toContain('<midi-channel>2</midi-channel><midi-program>33</midi-program>'); // bass: GM 32 is 1-based 33 in MusicXML

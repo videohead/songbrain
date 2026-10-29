@@ -4,7 +4,8 @@ import { choosePattern, pickWeighted, unit } from './select';
 import { normalizeStyle, validateStyle, type StyleV1 } from '../../model/style';
 import { PRESET_STYLES } from './presets';
 import { buildSchedule, PPQ } from '../schedule';
-import { defaultSong, defaultTracks } from '../../model/song';
+import { defaultTracks } from '../../model/song';
+import { jazzFixtureSong } from '../../model/fixtures';
 
 describe('selection', () => {
   it('unit hash is deterministic and in range', () => {
@@ -47,7 +48,7 @@ describe('v1 → v2', () => {
 
 describe('schedule with v2 styles', () => {
   it('substyle B changes the drums; fills appear on section last bars', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks();
     song.arrangement = { defaultStyle: 'straight8', substyles: { '1': 'b' } };
     const s = buildSchedule(song);
@@ -64,7 +65,7 @@ describe('schedule with v2 styles', () => {
     expect(toms(m7, m7 + 4 * PPQ)).toBe(false);
   });
   it('a pushed hit takes the next bar\'s chord', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.tracks = defaultTracks();
     // Custom style: one comp hit on the "and of 4" pushing into the next bar.
     song.styles = { p: { id: 'p', name: 'P', bars: 1, beatsPerBar: 4, feel: { swing: 0, pushPull: 0, humanize: 0, accents: [1, 1, 1, 1] }, substyles: { a: { comp: { voicing: 'shell', variations: [{ hits: [{ beat: 3.5, duration: 0.5, velocity: 80, voice: 'full', push: 0.5 }] }] } } } } };
@@ -76,7 +77,7 @@ describe('schedule with v2 styles', () => {
     expect(new Set(pushed.notes.map((x) => Note.chroma(x)))).toEqual(new Set([9, 3]));
   });
   it('chordTypes gates hits', () => {
-    const song = defaultSong();
+    const song = jazzFixtureSong();
     song.styles = { g: { id: 'g', name: 'G', bars: 1, beatsPerBar: 4, feel: { swing: 0, pushPull: 0, humanize: 0, accents: [1, 1, 1, 1] }, substyles: { a: { drums: { variations: [{ hits: [{ beat: 0, duration: 0.5, velocity: 90, drum: 49, chordTypes: ['dominant'] }] }] } } } } };
     song.arrangement = { defaultStyle: 'g', fills: false };
     song.tracks = defaultTracks();

@@ -143,5 +143,42 @@ export const FUNK: Style = {
   },
 };
 
-export const PRESET_STYLES: Record<string, Style> = Object.fromEntries([SWING, BOSSA, BALLAD, STRAIGHT8, FUNK].map((s) => [s.id, s]));
-export const DEFAULT_STYLE_ID = 'funk';
+
+/**
+ * Original 1980s Minneapolis-style pop-funk groove at about 120 bpm: a drum-machine feel (tight kick, snare
+ * layered with clap, shaker), a bouncy octave-pop bass and a light, syncopated guitar-like comp. Written by hand
+ * in the spirit of that sound; it is not derived from any particular recording.
+ */
+const shaker16 = Array.from({ length: 16 }, (_, i) => dr(i * 0.25, i % 4 === 0 ? 70 : i % 2 ? 40 : 54, D.shaker, 0.25));
+
+export const MINNEAPOLIS: Style = {
+  id: 'minneapolis', name: 'Minneapolis Pop-Funk',
+  description: '80s pop-funk at ~120 bpm: tight drum-machine kick, snare with clap, shaker, bouncy octave bass and a light syncopated comp. A: groove. B: busier with open hats. Original, not derived from a recording.',
+  bars: 1, beatsPerBar: 4,
+  feel: { swing: 0.08, pushPull: 2, humanize: 2, accents: [1, 0.85, 0.95, 0.85], rolePushPull: { bass: -1, chords: 3 } },
+  substyles: {
+    a: {
+      comp: { variations: [
+        { hits: [comp(0, 0.25, 82), comp(0.75, 0.25, 66, 'top'), comp(1.5, 0.25, 78), comp(2, 0.25, 64, 'top'), comp(2.75, 0.25, 76), comp(3.5, 0.25, 72, 'top', { push: 0.5 })], weight: 3 },
+        { hits: [comp(0, 0.5, 80), comp(1.5, 0.25, 76), comp(2.5, 0.25, 70, 'top'), comp(3.25, 0.25, 74), comp(3.75, 0.25, 70, 'full', { push: 0.25 })], weight: 2 },
+        { hits: [comp(0, 0.25, 84), comp(0.5, 0.25, 62, 'top'), comp(1, 0.25, 72), comp(1.75, 0.25, 68, 'top'), comp(2.5, 0.25, 78), comp(3, 0.25, 62, 'top'), comp(3.5, 0.25, 74, 'full', { push: 0.5 })], weight: 1 },
+      ] },
+      bass: { style: 'roots', variations: [
+        { hits: [bass(0, 0.5, 100, 'root'), bass(0.75, 0.25, 84, 'octave'), bass(1.5, 0.25, 88, 'root'), bass(2, 0.5, 94, 'root'), bass(2.75, 0.25, 82, 'octave'), bass(3.25, 0.25, 84, 'fifth'), bass(3.5, 0.5, 88, 'approach')], weight: 2 },
+        { hits: [bass(0, 0.75, 100, 'root'), bass(1.5, 0.25, 86, 'octave'), bass(2, 0.5, 92, 'root'), bass(3, 0.25, 84, 'fifth'), bass(3.5, 0.5, 90, 'approach')], weight: 1 },
+      ] },
+      drums: {
+        variations: [{ hits: [...shaker16, ...hats8(66, 48), dr(0, 108, D.kick, 0.25), dr(1.75, 84, D.kick, 0.25), dr(2.5, 96, D.kick, 0.25), dr(1, 108, D.snare, 0.25), dr(1, 78, D.clap, 0.25), dr(3, 108, D.snare, 0.25), dr(3, 78, D.clap, 0.25)] }],
+        fills: [{ hits: [...shaker16.slice(0, 8), dr(0, 108, D.kick, 0.25), dr(1, 108, D.snare, 0.25), dr(1, 78, D.clap, 0.25), dr(2, 96, D.snare, 0.25), dr(2.25, 72, D.snare, 0.25), dr(2.5, 98, D.highTom, 0.25), dr(2.75, 76, D.highTom, 0.25), dr(3, 100, D.midTom, 0.25), dr(3.25, 80, D.midTom, 0.25), dr(3.5, 106, D.lowTom, 0.25), dr(3.75, 90, D.lowTom, 0.25)] }],
+      },
+    },
+    b: {
+      comp: { variations: [{ hits: [comp(0, 0.25, 88), comp(0.5, 0.25, 70, 'top'), comp(0.75, 0.25, 72, 'top'), comp(1.5, 0.25, 82), comp(2, 0.25, 70, 'top'), comp(2.5, 0.25, 80), comp(3.25, 0.25, 72, 'top'), comp(3.75, 0.25, 84, 'full', { push: 0.25 })] }] },
+      bass: { style: 'roots', variations: [{ hits: [bass(0, 0.5, 104, 'root'), bass(0.75, 0.25, 86, 'octave'), bass(1.25, 0.25, 80, 'root'), bass(1.5, 0.5, 92, 'root'), bass(2.25, 0.25, 84, 'fifth'), bass(2.5, 0.25, 94, 'octave'), bass(3, 0.25, 82, 'root'), bass(3.5, 0.5, 90, 'approach')] }] },
+      drums: { variations: [{ hits: [...shaker16, ...hats8(74, 52).map((x) => (x.beat === 3.5 ? { ...x, drum: D.hhOpen } : x)), dr(0, 112, D.kick, 0.25), dr(0.75, 80, D.kick, 0.25), dr(1.75, 90, D.kick, 0.25), dr(2.5, 100, D.kick, 0.25), dr(1, 110, D.snare, 0.25), dr(1, 82, D.clap, 0.25), dr(3, 110, D.snare, 0.25), dr(3, 82, D.clap, 0.25), dr(3.75, 60, D.snare, 0.25)] }] },
+    },
+  },
+};
+
+export const PRESET_STYLES: Record<string, Style> = Object.fromEntries([SWING, BOSSA, BALLAD, STRAIGHT8, FUNK, MINNEAPOLIS].map((s) => [s.id, s]));
+export const DEFAULT_STYLE_ID = 'minneapolis';
