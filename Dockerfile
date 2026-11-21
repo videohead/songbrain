@@ -12,6 +12,8 @@ CMD ["npm", "run", "dev"]
 
 # ---- build static assets ----
 FROM base AS build
+ARG SONGBRAIN_BASE_PATH=/
+ENV SONGBRAIN_BASE_PATH=$SONGBRAIN_BASE_PATH
 RUN npm ci
 COPY . .
 RUN npm run build

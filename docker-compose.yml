@@ -23,13 +23,20 @@ services:
     build:
       context: .
       target: prod
+      args:
+        # Base path used by Vite when building assets; must match the Traefik
+        # route prefix (stripped before the request reaches this container).
+        SONGBRAIN_BASE_PATH: ${SONGBRAIN_BASE_PATH:-/songbrain/}
     ports:
-      - "5173:5173"
-    env_file: .env
+      - "127.0.0.1:${SONGBRAIN_PORT:-8938}:5173"
+    env_file:
+      - path: .env
+        required: false
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
       - DATA_DIR=/data
+      - SONGBRAIN_BASE_PATH=${SONGBRAIN_BASE_PATH:-/songbrain/}
     volumes:
       - songdata:/data
       - ./styles:/app/styles # saved styles land in the repo
